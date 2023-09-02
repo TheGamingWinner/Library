@@ -26,11 +26,11 @@ function connectDB() {
 }
 
 // Close MySQL connection when the process is terminated
-process.on('SIGINT'), () => {
-  pool.end(() => {
-    console.log('MySQL connection closed');
-    process.exit(0);
+process.on('SIGINT', () => {
+    pool.end(() => {
+      console.log('MySQL connection closed');
+      process.exit(0);
+    });
   });
-}
-
+  
 module.exports = { connectDB };
