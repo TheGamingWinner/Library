@@ -8,23 +8,29 @@ const mysqlConfig = {
   database: 'Library',
 };
 
-// Create a MySQL connection
-const mysqlConnection = mysql.createConnection(mysqlConfig);
+// Create a MySQL connection pool
+const pool = mysql.createPool(mysqlConfig);
 
-mysqlConnection.connect((err) => {
-  if (err) {
-    console.error('MySQL connection error:', err);
-  } else {
-    console.log('Connected to MySQL');
-  }
-});
+// Export a function to connect to the database
+function connectDB() {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((error, connection) => {
+      if (error) {
+        reject(error);
+      } else {
+        console.log('Connected to MySQL');
+        resolve(connection);
+      }
+    });
+  });
+}
 
 // Close MySQL connection when the process is terminated
-process.on('SIGINT', () => {
-  mysqlConnection.end(() => {
+process.on('SIGINT'), () => {
+  pool.end(() => {
     console.log('MySQL connection closed');
     process.exit(0);
   });
-});
+}
 
-module.exports = mysqlConnection;
+module.exports = { connectDB };
