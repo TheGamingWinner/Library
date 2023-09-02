@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Search</title>
+    <title>Library App</title>
 </head>
 <body>
-    <h1>Search for a Book</h1>
-
+    <h1>Welcome to the Library</h1>
+    
     <!-- Search Form -->
     <form id="searchForm">
         <label for="year">Year:</label>
@@ -16,11 +16,13 @@
             <option value="2">2</option>
             <option value="3">3</option>
         </select>
+
         <label for="Branch">Branch</label>
         <select id="Branch" name="Branch">
             <option value="Comp.Engg">Comp.Engg</option>
             <option value="Mechanical">Mechanical</option>
         </select>
+
         <label for="semester">Semester:</label>
         <select id="semester" name="semester">
             <option value="1">1</option>
@@ -33,6 +35,9 @@
 
         <button type="submit">Search</button>
     </form>
+
+    <!-- Admin Mode Button -->
+    <button id="adminModeButton">Admin Mode</button>
 
     <!-- Display Search Results -->
     <div id="searchResults">
