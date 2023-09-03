@@ -14,6 +14,16 @@
     <input type="password" id="pin" name="pin">
     <button id="verifyPin">Verify</button>
 
+    <script>
+        // Select the "verifyPin" button by its id
+        const verifyPinButton = document.getElementById('verifyPin');
+
+        // Add a click event listener to the "verifyPin" button
+        verifyPinButton.addEventListener('click', () => {
+            // Replace 'admin.html' with the correct path if needed
+            window.location.href = 'admin.html';
+        });
+    </script>
     <script src="admin.js"></script>
 </body>
 </html>
