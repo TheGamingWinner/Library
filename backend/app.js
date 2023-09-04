@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const passport = require('passport');
 
 // Import database-related functions from db.js
 const { connectDB, getBooks } = require('./lib/db');
@@ -33,4 +34,50 @@ app.listen(port, async () => {
     console.log(`Server is running on port ${port}`);
     // Connect to the database using connectDB function
     await connectDB();
+});
+
+// Login route
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/login',
+    })
+);
+
+// Logout route
+app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+});
+
+// Example route that only allows admins to access it
+app.get('/admin-panel', isAdmin, (req, res) => {
+    // Render the admin panel
+});
+
+function isAdmin(req, res, next) {
+    if (req.isAuthenticated() && req.user.role === 'admin') {
+        return next();
+    }
+    res.redirect('/');
+}
+
+// Example user registration route (admin role assignment)
+app.post('/register', (req, res) => {
+    const { username, password, role } = req.body;
+
+    const query = 'INSERT INTO users (username, password, role) VALUES (?, ?, ?)';
+
+    connection.query(query, [username, password, role], (err) => {
+        if (err) {
+            // Handle registration errors
+            return res.redirect('/register');
+        }
+
+        // Redirect to the admin panel or appropriate dashboard
+        res.redirect('/dashboard');
+    });
 });

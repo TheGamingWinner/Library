@@ -21,6 +21,3 @@ function bookDisplay(books) {
         bookList.appendChild(li);
     });
 }
-
-// Call the fetchBooks function when the page loads
-window.addEventListener("load", fetchBooks);
